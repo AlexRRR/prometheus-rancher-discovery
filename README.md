@@ -6,6 +6,17 @@ prom-rancher-sd polls [Rancher's metadata service](http://docs.rancher.com/ranch
 
 A configuration file suitable for use by [Prometheus](http://prometheus.io/) is written to enable services to be monitored automatically. Prometheus will scrape `/metrics` via HTTP by connecting to the container's primary IP on the port specified by the `prometheus.port` label.`
 
+## Prometheus configuration
+
+Prometheus must be configure to read the generated files via `file_sd_configs` 
+
+```
+- job_name: 'rancher-discovery'
+  file_sd_configs:
+  - files:
+    - /prom-rancher-sd-data/rancher.json
+````
+
 ## Alert groups
 
 The label `alert.group` might be added to the service, the value of is set as a prometheus label for the service, and is useful for routing alerts to specific groups using alertmanager.
